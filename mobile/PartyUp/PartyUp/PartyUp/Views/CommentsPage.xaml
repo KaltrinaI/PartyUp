@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewModels="clr-namespace:PartyUp.ViewModels;assembly=PartyUp"
+             xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:models="clr-namespace:PartyUp.Models;assembly=PartyUp"
+             x:DataType="viewModels:CommentsViewModel"
+             x:Class="PartyUp.Views.CommentsPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" Padding="10,0">
+            <ListView SelectionMode="None" HasUnevenRows="True" ItemsSource="{Binding Comments}" SeparatorVisibility="Default" SeparatorColor="Black" iOsSpecific:ListView.SeparatorStyle="FullWidth">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Comment">
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Vertical" WidthRequest="100">
+                                    <forms:CachedImage Source="{Binding User.ImageUrl}" VerticalOptions="Center" HeightRequest="50" WidthRequest="50"/>
+                                    <Label Text="{Binding User.FullName}"/>
+                                    <Label Text="{Binding DisplayTime}"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label LineBreakMode="WordWrap" Text="{Binding Text}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout VerticalOptions="End" HeightRequest="200" HorizontalOptions="FillAndExpand">
+                <BoxView HeightRequest="2" BackgroundColor="Black" HorizontalOptions="FillAndExpand"/>
+                <Editor Placeholder="Write a comment..." HorizontalOptions="FillAndExpand" AutoSize="Disabled" VerticalOptions="EndAndExpand" Text="{Binding Text, Mode=TwoWay}" ></Editor>
+                <Button WidthRequest="80" HorizontalOptions="End" Command="{Binding PostCommentCommand}" Text="Post"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

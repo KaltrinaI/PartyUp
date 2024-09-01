@@ -36,8 +36,8 @@ namespace PartyUp.Repositories.Implementations
                 throw new KeyNotFoundException("Comment not found.");
             }
 
-            comment.Content = requestBody.Content;
-            comment.CreatedAt = DateTime.UtcNow;
+            comment.Text = requestBody.Text;
+            comment.TimeOfComment = DateTime.UtcNow;
 
             _context.Comments.Update(comment);
             await _context.SaveChangesAsync();
@@ -58,7 +58,7 @@ namespace PartyUp.Repositories.Implementations
                 throw new ArgumentNullException(nameof(comment));
             }
 
-            comment.CreatedAt = DateTime.UtcNow;
+            comment.TimeOfComment = DateTime.UtcNow;
 
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();

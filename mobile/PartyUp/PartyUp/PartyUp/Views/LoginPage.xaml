@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:PartyUp.ViewModels;assembly=PartyUp"
+             NavigationPage.HasNavigationBar="False"
+
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="PartyUp.Views.LoginPage"
+             x:DataType="viewModels:LoginViewModel">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <forms:CachedImage HeightRequest="200" WidthRequest="200" Source="https://previews.123rf.com/images/maksymchechel/maksymchechel1803/maksymchechel180300057/96919188-party-lettering-design.jpg"/>
+            <StackLayout Padding="50,0,50,0">
+            <Label Text="Email"/>
+            <Entry Text="{Binding Email, Mode=TwoWay}"/>
+            </StackLayout>
+            <StackLayout Padding="50,0,50,0">
+                <Label Text="Password"/>
+                <Entry IsPassword="True" Text="{Binding Password, Mode=TwoWay}"/>
+            </StackLayout>
+            <Button Margin="50,0,50,0" Text="Log In" Command="{Binding LoginCommand}"/>
+            <Button Margin="50,0,50,0" Text="Sign up" Command="{Binding SignUpCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

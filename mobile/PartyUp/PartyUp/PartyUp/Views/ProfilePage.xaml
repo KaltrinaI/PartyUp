@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewModels="clr-namespace:PartyUp.ViewModels;assembly=PartyUp"
+             xmlns:models="clr-namespace:PartyUp.Models;assembly=PartyUp"
+             NavigationPage.HasNavigationBar="False"
+             x:DataType="viewModels:ProfileViewModel"
+             x:Name="ProfilePageName"
+             x:Class="PartyUp.Views.ProfilePage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" HeightRequest="200">
+                    <StackLayout>
+                        <forms:CachedImage 
+                            RetryCount="5" 
+                            ErrorPlaceholder="https://static.vecteezy.com/system/resources/previews/042/148/611/non_2x/new-twitter-x-logo-twitter-icon-x-social-media-icon-free-png.png" 
+                            LoadingPlaceholder="https://png.pngtree.com/png-vector/20220630/ourmid/pngtree-loading-indicator-icon-vector-illustration-design-sign-interface-indicator-vector-png-image_37467512.png" 
+                            Source="{Binding User.ImageUrl}" 
+                            VerticalOptions="Center" 
+                            HeightRequest="200" 
+                            WidthRequest="200"/>
+                    </StackLayout>
+                    <StackLayout Spacing="10" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Margin="10,0,0,0">
+                        <Label FontSize="Large" Text="{Binding User.FirstName}"/>
+                        <Label FontSize="Large" Text="{Binding User.LastName}"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <CollectionView 
+                x:Name="CollectionView"
+                SelectionMode="None"
+                            ItemSizingStrategy="MeasureFirstItem" Margin="0,10,0,0" 
+                            ItemsSource="{Binding MyAttendedEvents}">
+                <CollectionView.Header>
+                    <Label Padding="10" Text="My Past Attended Events"></Label>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Event">
+                        <StackLayout HeightRequest="70" Padding="0,5,0,5" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}" 
+                                                      Command="{Binding BindingContext.NavigateToEventDetailsCommand, Source={x:Reference ProfilePageName}}" 
+                                ></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <forms:CachedImage HeightRequest="60" WidthRequest="60" Source="{Binding PosterUrl}"/>
+                            <StackLayout VerticalOptions="Center">
+                                <Label Text="{Binding EventName}"/>
+                                <Label Text="{Binding DateTimeOfEvent}"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

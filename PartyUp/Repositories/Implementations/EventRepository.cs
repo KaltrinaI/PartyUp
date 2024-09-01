@@ -33,7 +33,7 @@ namespace PartyUp.Repositories.Implementations
             requestBody.Location = _mapper.Map<Location>(@event.Location);
             requestBody.Organizer = existingOrganizer;
             requestBody.PosterUrl = @event.PosterUrl;
-            requestBody.Price = @event.Price;
+            requestBody.EventTax = @event.EventTax;
             requestBody.NumberOfReservations = @event.NumberOfReservations;
             requestBody.Tags = @event.Tags;
 
@@ -63,10 +63,10 @@ namespace PartyUp.Repositories.Implementations
                 EventId = e.EventId,
                 EventName = e.EventName,
                 Description = e.Description,
-                Date = e.DateTimeOfEvent,
+                DateTimeOfEvent = e.DateTimeOfEvent,
                 Location = e.Location != null ? _mapper.Map<LocationDTO>(e.Location) : null,
                 PosterUrl = e.PosterUrl,
-                Price = e.Price,
+                EventTax = e.EventTax,
                 NumberOfReservations = e.NumberOfReservations,
                 Tags = e.Tags?.ToList(),
             }).ToList();
@@ -90,10 +90,10 @@ namespace PartyUp.Repositories.Implementations
                 EventId = @event.EventId,
                 EventName = @event.EventName,
                 Description = @event.Description,
-                Date = @event.DateTimeOfEvent,
+                DateTimeOfEvent = @event.DateTimeOfEvent,
                 Location = @event.Location != null ? _mapper.Map<LocationDTO>(@event.Location) : null,
                 PosterUrl = @event.PosterUrl,
-                Price = @event.Price,
+                EventTax = @event.EventTax,
                 NumberOfReservations = @event.NumberOfReservations,
                 Tags = @event.Tags.ToList()
             };
@@ -113,10 +113,10 @@ namespace PartyUp.Repositories.Implementations
                 EventId = e.EventId,
                 EventName = e.EventName,
                 Description = e.Description,
-                Date = e.DateTimeOfEvent,
+                DateTimeOfEvent = e.DateTimeOfEvent,
                 Location = e.Location != null ? _mapper.Map<LocationDTO>(e.Location) : null,
                 PosterUrl = e.PosterUrl,
-                Price = e.Price,
+                EventTax = e.EventTax,
                 NumberOfReservations = e.NumberOfReservations,
                 Tags = e.Tags.ToList() 
             }).ToList();
@@ -136,10 +136,10 @@ namespace PartyUp.Repositories.Implementations
                 EventId = e.EventId,
                 EventName = e.EventName,
                 Description = e.Description,
-                Date = e.DateTimeOfEvent,
+                DateTimeOfEvent = e.DateTimeOfEvent,
                 Location = e.Location != null ? _mapper.Map<LocationDTO>(e.Location) : null,
                 PosterUrl = e.PosterUrl,
-                Price = e.Price,
+                EventTax = e.EventTax,
                 NumberOfReservations = e.NumberOfReservations,
                 Tags = e.Tags.ToList()
             }).ToList();
@@ -166,10 +166,10 @@ namespace PartyUp.Repositories.Implementations
                 EventId = e.EventId,
                 EventName = e.EventName,
                 Description = e.Description,
-                Date = e.DateTimeOfEvent,
+                DateTimeOfEvent = e.DateTimeOfEvent,
                 Location = e.Location != null ? _mapper.Map<LocationDTO>(e.Location) : null,
                 PosterUrl = e.PosterUrl,
-                Price = e.Price,
+                EventTax = e.EventTax,
                 NumberOfReservations = e.NumberOfReservations,
                 Tags = e.Tags.ToList()
             }).ToList();
@@ -202,7 +202,7 @@ namespace PartyUp.Repositories.Implementations
             }
 
             @event.PosterUrl = requestBody.PosterUrl;
-            @event.Price = requestBody.Price;
+            @event.EventTax = requestBody.EventTax;
             @event.NumberOfReservations = requestBody.NumberOfReservations;
             @event.Tags = requestBody.Tags;
 
@@ -213,6 +213,7 @@ namespace PartyUp.Repositories.Implementations
         {
             var pastEvents = await _context.ReservationRequests
                 .Include(rr => rr.Event)
+                                .Include(rr => rr.Event.Location)
                 .Where(rr => rr.UserId == userId && rr.Status == ReservationStatus.Confirmed && rr.Event.DateTimeOfEvent < DateTime.UtcNow)
                 .Select(rr => rr.Event)
                 .ToListAsync();
@@ -224,6 +225,7 @@ namespace PartyUp.Repositories.Implementations
         {
             var upcomingEvents = await _context.ReservationRequests
                 .Include(rr => rr.Event)
+                .Include(rr => rr.Event.Location)
                 .Where(rr => rr.UserId == userId && rr.Status == ReservationStatus.Requested && rr.Event.DateTimeOfEvent >= DateTime.UtcNow)
                 .Select(rr => rr.Event)
                 .ToListAsync();

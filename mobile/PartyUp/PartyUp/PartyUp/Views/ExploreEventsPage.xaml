@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:PartyUp.Models;assembly=PartyUp"
+             x:Name="ExploreEventsPg"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:global="clr-namespace:;assembly=PartyUp"
+             xmlns:viewModels="clr-namespace:PartyUp.ViewModels;assembly=PartyUp"
+             x:Class="PartyUp.Views.ExploreEventsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <!-- Filter Controls -->
+            <Entry Placeholder="Search text" Text="{Binding EventFilter.Text, Mode=TwoWay}" />
+            <Entry Placeholder="Location" Text="{Binding EventFilter.LocationAddress, Mode=TwoWay}" />
+            <ScrollView Orientation="Horizontal" Padding="10,0">
+                <ScrollView.Triggers>
+                    <DataTrigger TargetType="ScrollView" Binding="{Binding Path=EventFilter.Tags.Count}" Value="0">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </ScrollView.Triggers>
+                <StackLayout Orientation="Horizontal" BindableLayout.ItemsSource="{Binding EventFilter.Tags}" Spacing="10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="0" CornerRadius="20" BackgroundColor="{Binding Color}">
+                            <StackLayout  HeightRequest="45"  Orientation="Horizontal" Padding="5,2" 
+                                          Spacing="5">
+                                <Label Text="{Binding Name}" VerticalOptions="Center" HorizontalOptions="Start" TextColor="White" />
+                                <Button WidthRequest="40" HeightRequest="40" HorizontalOptions="End" Text="X" BackgroundColor="Transparent" TextColor="White"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ExploreEventsViewModel}}, Path=RemoveTagCommand}" 
+                                        CommandParameter="{Binding .}" />
+                            </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+            <global:TagFilterPicker ItemsSource="{Binding AvailableTags}" SelectedItems="{Binding EventFilter.Tags}" />
+
+            <Button Text="Search" Command="{Binding RefetchEventsCommand}"></Button>
+            <CollectionView
+                SelectionMode="None"
+                ItemSizingStrategy="MeasureFirstItem" Margin="0,10,0,0"
+                ItemsSource="{Binding AllEvents}">
+                <CollectionView.Header>
+                    <Label Padding="10" Text="Explore"></Label>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Event">
+                        <StackLayout HeightRequest="70" Padding="0,5,0,5" Orientation="Horizontal"
+                                     HorizontalOptions="FillAndExpand">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}" 
+                                                      Command="{Binding BindingContext.NavigateToEventDetailsCommand, Source={x:Reference ExploreEventsPg}}" 
+                                ></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <forms:CachedImage HeightRequest="60" WidthRequest="60" Source="{Binding PosterUrl}" />
+                            <StackLayout VerticalOptions="Center">
+                                <Label Text="{Binding EventName}" />
+                                <Label Text="{Binding DateTimeOfEvent}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

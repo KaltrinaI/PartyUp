@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:viewModels="clr-namespace:PartyUp.ViewModels;assembly=PartyUp"
+             xmlns:behaviors="clr-namespace:PartyUp.Behaviors;assembly=PartyUp"
+             x:Class="PartyUp.Views.EventDetailsPage"
+             x:DataType="viewModels:EventDetailsViewModel">
+
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand">
+            <ScrollView>
+                <StackLayout Padding="10" Spacing="10">
+                    <Label Text="Event Details" FontSize="Large" HorizontalOptions="Center" />
+
+                    <StackLayout Orientation="Vertical">
+                        <Image Source="{Binding PartyEvent.PosterUrl}" HeightRequest="200" />
+                    </StackLayout>
+                    
+                    <Button IsVisible="{Binding IsExploring}" Text="Reserve a spot" Command="{Binding ReserveRequestCommand}"></Button>
+                    <Button Text="View comments" Command="{Binding ViewCommentsCommand}"></Button>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Event Name:" FontAttributes="Bold" />
+                        <Label Text="{Binding PartyEvent.EventName}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Date and Time:" FontAttributes="Bold" />
+                        <Label Text="{Binding PartyEvent.DateTimeOfEvent, StringFormat='{0:MMMM dd, yyyy hh:mm tt}'}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Event Tax:" FontAttributes="Bold" />
+                        <Label Text="{Binding PartyEvent.EventTax, StringFormat='${0}'}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Number of Reservations:" FontAttributes="Bold" />
+                        <Label Text="{Binding PartyEvent.NumberOfReservations}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Location:" FontAttributes="Bold" />
+                        <Label Text="{Binding PartyEvent.Location.Address}" />
+                    </StackLayout>
+                </StackLayout>
+
+            </ScrollView>
+
+            <maps:Map
+                HeightRequest="300"
+                WidthRequest="300"
+                VerticalOptions="FillAndExpand"
+                MapType="Street">
+                <maps:Map.Behaviors>
+                    <behaviors:MapBehavior />
+                </maps:Map.Behaviors>
+            </maps:Map>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

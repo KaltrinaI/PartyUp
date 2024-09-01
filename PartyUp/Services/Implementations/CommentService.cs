@@ -33,12 +33,13 @@ namespace PartyUp.Services.Implementations
             return _mapper.Map<IEnumerable<CommentResponseDTO>>(comments);
         }
 
-        public async Task WriteComment(CommentDTO commentDto)
+        public async Task <CommentDTO> WriteComment(CommentDTO commentDto)
         {
             var comment = _mapper.Map<Comment>(commentDto);
-            comment.CreatedAt = DateTime.UtcNow;
+            comment.TimeOfComment = DateTime.UtcNow;
 
             await _commentRepository.WriteComment(comment);
+            return commentDto;
         }
     }
 }

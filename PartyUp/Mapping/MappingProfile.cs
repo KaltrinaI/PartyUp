@@ -25,7 +25,7 @@ namespace PartyUp.Mapping
 
             _ = CreateMap<Event, EventResponseDTO>()
                  .ForMember(dest => dest.EventName, opt => opt.MapFrom(src => src.EventName))
-                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.DateTimeOfEvent))
+                 .ForMember(dest => dest.DateTimeOfEvent, opt => opt.MapFrom(src => src.DateTimeOfEvent))
                  .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
                  .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags == null ? new List<Tag>() : src.Tags.ToList()));
 
@@ -55,7 +55,7 @@ namespace PartyUp.Mapping
 
             CreateMap<CommentDTO, Comment>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.TimeOfComment, opt => opt.Ignore())
                 .ForMember(dest => dest.User, opt => opt.Ignore()) 
                 .ForMember(dest => dest.Event, opt => opt.Ignore());
 
@@ -63,7 +63,7 @@ namespace PartyUp.Mapping
                 .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.EventId, opt => opt.MapFrom(src => src.EventId))
-                .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content));
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text));
 
 
             CreateMap<CommentResponseDTO, Comment>()
@@ -72,7 +72,7 @@ namespace PartyUp.Mapping
                 .ForMember(dest => dest.EventId, opt => opt.MapFrom(src => src.EventId))
                 .ForMember(dest => dest.User, opt => opt.Ignore()) 
                 .ForMember(dest => dest.Event, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+                .ForMember(dest => dest.TimeOfComment, opt => opt.Ignore());
         }
     }
 }

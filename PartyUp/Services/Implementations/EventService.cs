@@ -72,15 +72,14 @@ namespace PartyUp.Services.Implementations
         {
             var dateTimeNow = DateTime.UtcNow;
 
-            var events = (await _eventRepository.GetAllEvents())
-                .Where(x => (x.Date - dateTimeNow) > TimeSpan.Zero)  
-                .Where(e => e.EventName.Contains(eventFilter.Text, StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(eventFilter.Text)) 
-                .Where(v => v.Location.Address.Contains(eventFilter.LocationAddress, StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(eventFilter.LocationAddress)) 
-                .Where(t => eventFilter.Tags == null || t.Tags.Any(b => eventFilter.Tags.Contains(b)));  
+            var events = (await _eventRepository.GetAllEvents()).Where(x => (x.DateTimeOfEvent - dateTimeNow) > TimeSpan.Zero)
+                .Where(e => string.IsNullOrEmpty(eventFilter.Text) || e.EventName.Contains(eventFilter.Text, StringComparison.OrdinalIgnoreCase))
+                .Where(v => string.IsNullOrEmpty(eventFilter.LocationAddress) || v.Location.Address.Contains(eventFilter.LocationAddress, StringComparison.OrdinalIgnoreCase))
+                .Where(t => eventFilter.Tags == null || eventFilter.Tags.Count()==0 || t.Tags.Any(b => eventFilter.Tags.Any(v=>v.Id==b.Id) ));
 
             var reser = (await _reservationRequestRepository.GetAllReservationRequestsForUser(eventFilter.UserId))
-                       .Where(x => x?.Event?.Name != null)  
-                       .Select(x => x.Event.Name);
+                .Where(x => x?.Event?.EventName != null)
+                .Select(x => x.Event.EventName);
 
             return events.Where(e => !reser.Contains(e.EventName)); 
         }

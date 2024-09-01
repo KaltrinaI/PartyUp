@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:PartyUp.ViewModels;assembly=PartyUp"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="PartyUp.Views.SignUpPage"
+             x:DataType="viewModels:SignUpViewModel">
+    <ContentPage.Content>
+        <StackLayout Padding="20,0,20,0" VerticalOptions="CenterAndExpand">
+            <forms:CachedImage HeightRequest="200" WidthRequest="200" Source="https://previews.123rf.com/images/maksymchechel/maksymchechel1803/maksymchechel180300057/96919188-party-lettering-design.jpg"/>
+                <Entry Placeholder="First Name" Text="{Binding FirstName, Mode=TwoWay}"/>
+            <Entry Placeholder="Last Name" Text="{Binding LastName, Mode=TwoWay}"/>
+            <StackLayout Orientation="Horizontal">
+                <Label VerticalTextAlignment="Center" Text="DoB: "/>
+                <DatePicker Date="{Binding DateOfBirth, Mode=TwoWay}"/>
+            </StackLayout>
+            
+                <Entry Placeholder="Email" Text="{Binding Email, Mode=TwoWay}"/>
+            
+                <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password, Mode=TwoWay}"/>
+            
+                <Entry Placeholder="Confirm password" IsPassword="True" Text="{Binding ConfirmPassword, Mode=TwoWay}"/>
+            <Button Margin="0,0,0,80" Text="Sign up" Command="{Binding SignUpCommand}"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

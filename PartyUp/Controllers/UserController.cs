@@ -45,14 +45,15 @@ namespace PartyUp.Controllers
                 return BadRequest("User already exists");
             }
 
+
             var user = new User
             {
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.FirstName + request.LastName,
-                ImageUrl = request.ImageUrl,
-                DateOfBirth = request.DateOfBirth
+                ImageUrl = request.ImageUrl ?? "",
+                DateOfBirth = new DateTime(request.DateOfBirth.Year, request.DateOfBirth.Month, request.DateOfBirth.Day, 12,0, 0, DateTimeKind.Utc)
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -67,7 +68,7 @@ namespace PartyUp.Controllers
             }
 
             _logger.LogInformation($"User {user.UserName} registered successfully.");
-            return Ok("User created successfully");
+            return Ok(user);
         }
 
         [HttpPost("login")]
@@ -98,7 +99,10 @@ namespace PartyUp.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 Token = accessToken,
-                UserId= user.Id
+                UserId= user.Id,
+                FirstName =user.FirstName,
+                LastName = user.LastName,
+                ImageUrl = user.ImageUrl
             });
         }
 

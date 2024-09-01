@@ -10,7 +10,7 @@ namespace PartyUp.Models
         public string EventName { get; set; }
         public DateTime DateTimeOfEvent { get; set; }
         public string PosterUrl { get; set; }
-        public double Price { get; set; }
+        public int EventTax { get; set; }
         public int NumberOfReservations { get; set; }
         public Location Location { get; set; }
         public int LocationId { get; set; }

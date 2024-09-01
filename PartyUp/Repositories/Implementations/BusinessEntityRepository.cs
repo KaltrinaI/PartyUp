@@ -72,7 +72,7 @@ namespace PartyUp.Repositories.Implementations
                     EventId = ev.EventId,
                     EventName = ev.EventName,
                     Description = ev.Description,
-                    Date = ev.DateTimeOfEvent,
+                    DateTimeOfEvent = ev.DateTimeOfEvent,
                     Location = ev.Location != null ? new LocationDTO
                     {
                         Address = ev.Location.Address,
@@ -80,7 +80,7 @@ namespace PartyUp.Repositories.Implementations
                         Longitude = ev.Location.Longitude
                     } : null,
                     PosterUrl = ev.PosterUrl,
-                    Price = ev.Price,
+                    EventTax = ev.EventTax,
                     NumberOfReservations = ev.NumberOfReservations,
                     Tags = ev.Tags.ToList()
                 }).ToList()
@@ -119,7 +119,7 @@ namespace PartyUp.Repositories.Implementations
                     EventId = ev.EventId,
                     EventName = ev.EventName,
                     Description = ev.Description,
-                    Date = ev.DateTimeOfEvent,
+                    DateTimeOfEvent = ev.DateTimeOfEvent,
                     Location = ev.Location != null ? new LocationDTO
                     {
                         Address = ev.Location.Address,
@@ -127,7 +127,7 @@ namespace PartyUp.Repositories.Implementations
                         Longitude = ev.Location.Longitude
                     } : null,
                     PosterUrl = ev.PosterUrl,
-                    Price = ev.Price,
+                    EventTax = ev.EventTax,
                     NumberOfReservations = ev.NumberOfReservations,
                     Tags = ev.Tags.ToList()
                 }).ToList()
@@ -167,7 +167,7 @@ namespace PartyUp.Repositories.Implementations
                     EventId = ev.EventId,
                     EventName = ev.EventName,
                     Description = ev.Description,
-                    Date = ev.DateTimeOfEvent,
+                    DateTimeOfEvent = ev.DateTimeOfEvent,
                     Location = ev.Location != null ? new LocationDTO
                     {
                         Address = ev.Location.Address,
@@ -175,7 +175,7 @@ namespace PartyUp.Repositories.Implementations
                         Longitude = ev.Location.Longitude
                     } : null,
                     PosterUrl = ev.PosterUrl,
-                    Price = ev.Price,
+                    EventTax = ev.EventTax,
                     NumberOfReservations = ev.NumberOfReservations,
                     Tags = ev.Tags.ToList()
                 }).ToList()

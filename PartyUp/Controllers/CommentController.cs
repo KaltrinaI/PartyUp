@@ -18,16 +18,16 @@ namespace PartyUp.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> WriteComment(CommentDTO commentDto)
+        public async Task<ActionResult<CommentDTO>> WriteComment(CommentDTO commentDto)
         {
 
             await _commentService.WriteComment(commentDto);
-            return Ok(new { Message = "Comment posted successfully" });
+            return Ok(commentDto);
         }
 
         [HttpGet("event/{eventId}")]
         [Authorize]
-        public async Task<IActionResult> GetCommentsPerEvent(int eventId)
+        public async Task<ActionResult<IEnumerable<CommentResponseDTO>>> GetCommentsPerEvent(int eventId)
         {
             var comments = await _commentService.GetCommentsPerEvent(eventId);
             return Ok(comments);
@@ -36,7 +36,7 @@ namespace PartyUp.Controllers
 
         [HttpPut("{commentId}")]
         [Authorize] 
-        public async Task<IActionResult> EditComment(CommentResponseDTO requestBody, int commentId)
+        public async Task<ActionResult> EditComment(CommentResponseDTO requestBody, int commentId)
         {
             await _commentService.EditComment(requestBody, commentId);
             return Ok(new { Message = "Comment updated successfully" });
@@ -44,7 +44,7 @@ namespace PartyUp.Controllers
 
         [HttpDelete("{commentId}")]
         [Authorize]
-        public async Task<IActionResult> DeleteComment(int commentId)
+        public async Task<ActionResult> DeleteComment(int commentId)
         {
             await _commentService.DeleteComment(commentId);
             return Ok(new { Message = "Comment deleted successfully" });
